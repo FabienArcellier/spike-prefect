@@ -1,20 +1,27 @@
 import os.path
-from typing import Tuple, List
+import time
+from typing import List
 
 from prefect import Flow
 from prefect.deployments import Deployment
 
-from app.main import my_favorite_function
 
-deployments: List[Tuple[Flow, str]] = [
-    (my_favorite_function, "main.my_favorite_function")
-]
+def deploy(flows: List[Flow]):
+    root_dir = os.path.join(os.path.dirname(__file__), '..', '..', '..')
+    deployments_logs = []
+    for flow in flows:
+        deployment = Deployment.build_from_flow(
+            flow=flow,
+            name="deploy",
+            path=root_dir,
+        )
+        deployment_id = deployment.apply()
+        deployments_logs.append(f"{flow.name}: {deployment_id}")
+
+    print(flows)
+
 
 if __name__ == "__main__":
-    for deploy in deployments:
-        deployment = Deployment.build_from_flow(
-            flow=deploy[0],
-            name=deploy[1],
-            path='/app/src/app/'
-        )
-        deployment.apply()
+    from app import flows
+    time.sleep(5)
+    logs = deploy(flows)

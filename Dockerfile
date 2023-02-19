@@ -19,4 +19,3 @@ USER user
 WORKDIR /app
 
 ENV PATH="/app/.venv/bin:$PATH"
-CMD ["prefect", "server", "start"]

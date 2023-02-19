@@ -1,9 +1,14 @@
 from prefect import flow
 
-@flow
+
+@flow(name="main.my_favorite_function")
 def my_favorite_function():
     print("What is your favorite number?")
-    return 43
+    print(43)
 
-if __name__ == "__main__":
-    print(my_favorite_function())
+
+@flow(name="main.my_favorite_function_2")
+def my_favorite_function_2():
+    print("What is your favorite number?")
+    print(45)
+
