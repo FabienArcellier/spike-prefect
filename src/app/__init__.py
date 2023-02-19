@@ -1,3 +1,6 @@
-from app.main import my_favorite_function, my_favorite_function_2
+from app import main
 
-flows = [my_favorite_function, my_favorite_function_2]
+flows = [
+    main.my_favorite_function,
+    main.my_favorite_function_2
+]
